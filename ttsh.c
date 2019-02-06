@@ -1,11 +1,9 @@
 /*
- * The Tiny Torero Shell (TTSH)
- * Names: Taylor Wong and Cecilia Barnhill
- * Hours: 12
- * Project Bucks: 0
+ * COMP 310 Operating Systems
+ * Project 1: Torero Shell
+ * Names: Taylor Wong and Mia Kim
  */
 
-// NOTE: all new includes should go after the following #define
 #define _XOPEN_SOURCE 600
 
 #include <stdlib.h>
@@ -46,7 +44,6 @@ int main() {
 			fflush(stdout);
 			exit(0);
 		}
-		// TODO: remove this line after you are done testing/debugging.
 		fprintf(stdout, "DEBUG: %s\n", cmdline);
 		char *argv[MAXARGS];
 		// parseArguments returns non-zero (true) if the command line includes & at the end
