@@ -1,7 +1,7 @@
 /*
- * The Tiny Torero Shell (TTSH)
- * Names: Taylor Wong and Cecilia Barnhill
- * Hours: 4 
+ * COMP 310: Operating Systems 
+ * Project 1: Torero Shell
+ * Names: Taylor Wong and Mia Kim
  */
 #include <stdlib.h>
 #include <string.h>
@@ -13,7 +13,7 @@
 //                   all other variables should be allocated on the stack
 // static: means these variables are only in scope in this .c module
 static HistoryEntry history[MAXHIST]; 
-	
+
 static int queue_start = 0;
 static int queue_next = 0;
 static int queue_size = 0;
@@ -26,24 +26,36 @@ static int queue_size = 0;
  */
 void add_queue(char *cmdline, int cmd_num)
 {
-	if(queue_next < MAXHIST)
+	if(strcmp(cmdline, "!!") != 0)
 	{
-		history[queue_next].cmd_num = cmd_num;
-		strncpy(history[queue_next].cmdline, cmdline, MAXLINE);
-		queue_next++;
-		queue_size++;
-	}
-	else
-	{
-		int next_mod = queue_next % MAXHIST;
-		if(queue_start == next_mod){
-			queue_start++;
-			queue_start = queue_start % MAXHIST;
+		if(queue_next < MAXHIST)
+		{
+			history[queue_next].cmd_num = cmd_num;
+			strncpy(history[queue_next].cmdline, cmdline, MAXLINE);
+			queue_next++;
+			queue_size++;
 		}
-		history[next_mod].cmd_num = cmd_num;
-		strncpy(history[next_mod].cmdline, cmdline, MAXLINE);
+		else
+		{
+			int next_mod = queue_next % MAXHIST;
+			if(queue_start == next_mod){
+				queue_start++;
+				queue_start = queue_start % MAXHIST;
+			}
+			history[next_mod].cmd_num = cmd_num;
+			strncpy(history[next_mod].cmdline, cmdline, MAXLINE);
+		}
 	}
 }
+
+/**
+ * 
+ */
+char* peek_queue()
+{
+	return history[queue_size].cmdline;
+}
+
 
 /**
  * Prints the most recent 10 commands

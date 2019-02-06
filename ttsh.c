@@ -56,7 +56,8 @@ int main() {
 		else if(bi == 0)
 			execute_cmd(argv, bg); 
 		//add the command to the history queue and increment count
-		add_queue(cmdline,count);
+		if(strcpy(cmdline, "!!") != 0)
+			add_queue(cmdline,count);
 		count++;
 		}	
 	return 0;
@@ -85,9 +86,11 @@ int builtin_cmd(char **argv){
 		print_queue();
 		return 1;
 	}
-	else if((strncmp(argv[0], "!", 1)) == 0)
+	else if((strncmp(argv[0], "!!", 1)) == 0)
 	{
-		return 2;
+		char *lastCmd = peek_queue();
+		printf(&lastCmd);
+		return 1; //builtin_cmd(lastCmd);
 	}
 	else if ((strcmp(argv[0], "cd")) == 0){
 		if (argv[1] == NULL)
