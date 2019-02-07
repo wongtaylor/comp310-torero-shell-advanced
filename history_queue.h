@@ -22,5 +22,6 @@ typedef struct HistoryEntry HistoryEntry;
 
 void print_queue();
 void add_queue(char *arg, int cmd_num);
+char *peek_queue();
 char *pastCmd(char *cmdline);
 #endif

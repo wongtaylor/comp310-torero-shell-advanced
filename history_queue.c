@@ -51,9 +51,10 @@ void add_queue(char *cmdline, int cmd_num)
 /**
  * 
  */
-char* peek_queue()
+char *peek_queue()
 {
-	return history[queue_size].cmdline;
+	printf((history[queue_size]).cmdline);
+	return (history[queue_size]).cmdline;
 }
 
 

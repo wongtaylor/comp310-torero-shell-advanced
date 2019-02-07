@@ -52,12 +52,18 @@ int main() {
 		//execute command if not a built in command
 		int bi = 0;
 		if((bi = builtin_cmd(argv)) == 2) // 0 returned for not a built in command
+		{
+			printf("called builtin func \n");
 			strncpy(cmdline, pastCmd(cmdline), MAXLINE);
+		}
 		else if(bi == 0)
+		{
+			printf("about to execute command \n");
 			execute_cmd(argv, bg); 
+			printf("executed cmd \n");
+		}
 		//add the command to the history queue and increment count
-		if(strcpy(cmdline, "!!") != 0)
-			add_queue(cmdline,count);
+		add_queue(cmdline,count);
 		count++;
 		}	
 	return 0;
@@ -86,10 +92,10 @@ int builtin_cmd(char **argv){
 		print_queue();
 		return 1;
 	}
-	else if((strncmp(argv[0], "!!", 1)) == 0)
+	else if((strcmp(argv[0], "!!")) == 0)
 	{
 		char *lastCmd = peek_queue();
-		printf(&lastCmd);
+		printf("In builtin function %s \n", lastCmd);
 		return 1; //builtin_cmd(lastCmd);
 	}
 	else if ((strcmp(argv[0], "cd")) == 0){
@@ -100,6 +106,11 @@ int builtin_cmd(char **argv){
 				printf("No such directory exists! \n");
 		}
 		return 0;
+	}
+	else if(strcmp(argv[0], "ls") == 0)
+	{
+		printList();
+		return 1;
 	}
 	else
 		return 0;    // not a built in command
@@ -130,6 +141,16 @@ void execute_cmd(char **argv, int bg){
 	//else // background
 	//	wpid = waitpid(pid, NULL, WNOHANG);
 }
+
+/*
+ *
+ *
+ */
+void printList()
+{
+		
+}
+
 /*
 void NumCmd(char **argv, int *count){
 	char cmdline[strlen(argv[0])];
