@@ -33,6 +33,7 @@ void execute_cmd(char **argv, int bg);
 extern char *pastCmd(char *cmdline);
 void printList(char *option);
 char* formatTime(struct stat attr);
+char* getPWD();
 
 int main() { 
 	// Handle SIGCHILD signal by calling child_handler signal instead
@@ -81,6 +82,8 @@ int main() {
 	}	
 	return 0;
 }
+
+
 void child_handler(__attribute__ ((unused)) int sig){
 	pid_t pid;
 	int status;
@@ -128,6 +131,26 @@ int builtin_cmd(char **argv){
 	else if(strcmp(argv[0], "ls -al") == 0)
 	{
 		printList(argv[0]);
+		return 1;
+	}
+	else if(strcmp(argv[0], "!num") == 0)
+	{
+		return 1;
+	}
+	else if(strcmp(argv[0], "!!") == 0)
+	{
+
+		return 1;
+	}
+	else if(strcmp(argv[0], "cat") == 0)
+	{
+		return 1;
+
+	}
+	else if(strcmp(argv[0], "pwd") == 0)
+	{
+		char *currentPath = getPWD();
+		printf("%s\n", currentPath);
 		return 1;
 	}
 	else
@@ -201,6 +224,27 @@ void printList(char *option)
 		}
 		closedir(myDirectory);
 	}
+}
+
+/*
+ *
+ *
+ *
+ */
+char* getPWD()
+{
+	char *error = NULL;
+	char *currentDir = NULL;	
+	currentDir = getenv("PWD");
+	if(NULL == currentDir) 
+	{
+		printf("ERROR couldn't get working directory\n");	
+	}
+	else
+	{
+		return currentDir;
+	}
+	return error;
 }
 
 char* formatTime(struct stat attr)
